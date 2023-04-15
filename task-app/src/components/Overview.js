@@ -41,7 +41,7 @@ class Overview extends Component {
 						</>
 					) : (
 						<>
-							{`#${i}`} - {task.text}
+							{`#${i + 1}`} - {task.text}
 							<button onClick={() => deleteTask(task.id)}>Delete</button>
 							<button onClick={() => editTask(task.id)}>Edit</button>
 						</>
