@@ -11,10 +11,17 @@ class App extends Component {
 			task: {
 				text: '',
 				id: uniqid(),
+				index: 0,
 			},
 			tasks: [],
 		};
 	}
+
+	deleteTask = taskId => {
+		this.setState({
+			tasks: this.state.tasks.filter(task => task.id !== taskId),
+		});
+	};
 
 	handleChange = e => {
 		this.setState({
@@ -51,7 +58,10 @@ class App extends Component {
 					/>
 					<button type="submit">Add Task</button>
 				</form>
-				<Overview tasks={tasks} />
+				<Overview
+					tasks={tasks}
+					deleteTask={this.deleteTask}
+				/>
 			</div>
 		);
 	}

@@ -1,15 +1,19 @@
 import React from 'react';
 
 const Overview = props => {
-	const { tasks } = props;
+	const { tasks, deleteTask } = props;
 
-	return (
-		<ul>
-			{tasks.map(task => {
-				return <li key={task.id}>{task.text}</li>;
-			})}
-		</ul>
-	);
+	const listItems = tasks.map((task, i) => {
+		return (
+			<li key={task.id}>
+				{`#${i}`} - {task.text} -{' '}
+				<button onClick={() => deleteTask(task.id)}>delete</button>
+				<button onClick={() => editTask(task.id)}>edit</button>
+			</li>
+		);
+	});
+
+	return <>{listItems}</>;
 };
 
 export default Overview;
