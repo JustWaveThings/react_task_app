@@ -81,7 +81,6 @@ class App extends Component {
 					tasks={tasks}
 					deleteTask={this.deleteTask}
 					editTask={this.editTask}
-					onChange={this.handleChange}
 					submitEdit={this.submitEdit}
 				/>
 			</div>
