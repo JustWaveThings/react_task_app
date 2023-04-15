@@ -12,10 +12,29 @@ class App extends Component {
 				text: '',
 				id: uniqid(),
 				index: 0,
+				editing: false,
 			},
 			tasks: [],
 		};
 	}
+
+	editTask = taskId => {
+		this.setState(prevState => ({
+			tasks: prevState.tasks.map(task =>
+				task.id === taskId ? { ...task, editing: !task.editing } : task
+			),
+		}));
+	};
+
+	submitEdit = (taskId, editedText) => {
+		this.setState(prevState => ({
+			tasks: prevState.tasks.map(task =>
+				task.id === taskId
+					? { ...task, text: editedText, editing: !task.editing }
+					: task
+			),
+		}));
+	};
 
 	deleteTask = taskId => {
 		this.setState({
@@ -61,6 +80,9 @@ class App extends Component {
 				<Overview
 					tasks={tasks}
 					deleteTask={this.deleteTask}
+					editTask={this.editTask}
+					onChange={this.handleChange}
+					submitEdit={this.submitEdit}
 				/>
 			</div>
 		);

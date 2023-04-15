@@ -1,19 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Overview = props => {
-	const { tasks, deleteTask } = props;
+class Overview extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			editedText: '',
+		};
+	}
 
-	const listItems = tasks.map((task, i) => {
-		return (
-			<li key={task.id}>
-				{`#${i}`} - {task.text} -{' '}
-				<button onClick={() => deleteTask(task.id)}>delete</button>
-				<button onClick={() => editTask(task.id)}>edit</button>
-			</li>
-		);
-	});
+	handleEditChange = e => {
+		this.setState({
+			editedText: e.target.value,
+		});
+	};
 
-	return <>{listItems}</>;
-};
+	render() {
+		const { tasks, deleteTask, editTask, submitEdit } = this.props;
+		const { editedText } = this.state;
+
+		const listItems = tasks.map((task, i) => {
+			return (
+				<li key={task.id}>
+					{task.editing ? (
+						<>
+							<input
+								type="text"
+								defaultValue={task.text}
+								onChange={this.handleEditChange}
+							/>
+							<button
+								type="submit"
+								onClick={() => submitEdit(task.id, editedText)}
+							>
+								Submit Task
+							</button>
+						</>
+					) : (
+						<>
+							{`#${i}`} - {task.text}
+							<button onClick={() => deleteTask(task.id)}>Delete</button>
+							<button onClick={() => editTask(task.id)}>Edit</button>
+						</>
+					)}
+				</li>
+			);
+		});
+
+		return <>{listItems}</>;
+	}
+}
 
 export default Overview;
