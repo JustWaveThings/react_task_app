@@ -4,19 +4,21 @@ class Overview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			editedText: '',
+			editedTexts: {},
 		};
 	}
 
-	handleEditChange = e => {
+	handleEditChange = (taskId, e) => {
 		this.setState({
-			editedText: e.target.value,
+			editedTexts: {
+				...this.state.editedTexts,
+				[taskId]: e.target.value,
+			},
 		});
 	};
 
 	render() {
 		const { tasks, deleteTask, editTask, submitEdit } = this.props;
-		const { editedText } = this.state;
 
 		const listItems = tasks.map((task, i) => {
 			return (
@@ -26,11 +28,13 @@ class Overview extends Component {
 							<input
 								type="text"
 								defaultValue={task.text}
-								onChange={this.handleEditChange}
+								onChange={e => this.handleEditChange(task.id, e)}
 							/>
 							<button
 								type="submit"
-								onClick={() => submitEdit(task.id, editedText)}
+								onClick={() =>
+									submitEdit(task.id, this.state.editedTexts[task.id])
+								}
 							>
 								Submit Task
 							</button>

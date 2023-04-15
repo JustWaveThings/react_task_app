@@ -30,7 +30,7 @@ class App extends Component {
 		this.setState(prevState => ({
 			tasks: prevState.tasks.map(task =>
 				task.id === taskId
-					? { ...task, text: editedText, editing: !task.editing }
+					? { ...task, text: editedText || task.text, editing: !task.editing }
 					: task
 			),
 		}));
