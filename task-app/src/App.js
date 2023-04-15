@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Overview from './components/Overview';
+import TaskList from './components/TaskList';
 import uniqid from 'uniqid';
 import './App.css';
 
@@ -77,7 +77,7 @@ class App extends Component {
 					/>
 					<button type="submit">Add Task</button>
 				</form>
-				<Overview
+				<TaskList
 					tasks={tasks}
 					deleteTask={this.deleteTask}
 					editTask={this.editTask}
