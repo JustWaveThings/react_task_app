@@ -8,6 +8,12 @@ class TaskList extends Component {
 		};
 	}
 
+	deleteTask = taskId => {
+		this.setState({
+			tasks: this.state.tasks.filter(task => task.id !== taskId),
+		});
+	};
+
 	handleEditChange = (taskId, e) => {
 		this.setState({
 			editedTexts: {
@@ -17,23 +23,43 @@ class TaskList extends Component {
 		});
 	};
 
-	render() {
-		const { tasks, deleteTask, editTask, submitEdit } = this.props;
+	// should be moved to TaskList.js
 
-		const listItems = tasks.map((task, i) => {
+	editTask = taskId => {
+		this.setState(prevState => ({
+			tasks: prevState.tasks.map(task =>
+				task.id === taskId ? { ...task, editing: !task.editing } : task
+			),
+		}));
+	};
+
+	// should be moved to TaskList.js
+
+	submitEdit = (taskId, editedText) => {
+		this.setState(prevState => ({
+			tasks: prevState.tasks.map(task =>
+				task.id === taskId
+					? { ...task, text: editedText || task.text, editing: !task.editing }
+					: task
+			),
+		}));
+	};
+
+	render() {
+		const listItems = this.props.tasks.map((task, i) => {
 			return (
 				<li key={task.id}>
 					{task.editing ? (
 						<>
 							<input
 								type="text"
-								defaultValue={task.text}
+								defaultValue={this.props.task.text}
 								onChange={e => this.handleEditChange(task.id, e)}
 							/>
 							<button
 								type="submit"
 								onClick={() =>
-									submitEdit(task.id, this.state.editedTexts[task.id])
+									this.submitEdit(task.id, this.state.editedTexts[task.id])
 								}
 							>
 								Submit Task
@@ -42,8 +68,8 @@ class TaskList extends Component {
 					) : (
 						<>
 							{`#${i + 1}`} - {task.text}
-							<button onClick={() => deleteTask(task.id)}>Delete</button>
-							<button onClick={() => editTask(task.id)}>Edit</button>
+							<button onClick={() => this.deleteTask(task.id)}>Delete</button>
+							<button onClick={() => this.editTask(task.id)}>Edit</button>
 						</>
 					)}
 				</li>

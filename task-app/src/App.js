@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import TaskList from './components/TaskList';
-import uniqid from 'uniqid';
 import './App.css';
+import Input from './components/Input';
+import uniqid from 'uniqid';
 
 class App extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 
 		this.state = {
 			task: {
@@ -18,72 +19,12 @@ class App extends Component {
 		};
 	}
 
-	editTask = taskId => {
-		this.setState(prevState => ({
-			tasks: prevState.tasks.map(task =>
-				task.id === taskId ? { ...task, editing: !task.editing } : task
-			),
-		}));
-	};
-
-	submitEdit = (taskId, editedText) => {
-		this.setState(prevState => ({
-			tasks: prevState.tasks.map(task =>
-				task.id === taskId
-					? { ...task, text: editedText || task.text, editing: !task.editing }
-					: task
-			),
-		}));
-	};
-
-	deleteTask = taskId => {
-		this.setState({
-			tasks: this.state.tasks.filter(task => task.id !== taskId),
-		});
-	};
-
-	handleChange = e => {
-		this.setState({
-			task: {
-				text: e.target.value,
-				id: this.state.task.id,
-			},
-		});
-	};
-
-	onSubmitTask = e => {
-		e.preventDefault();
-		this.setState({
-			tasks: this.state.tasks.concat(this.state.task),
-			task: {
-				text: '',
-				id: uniqid(),
-			},
-		});
-	};
-
 	render() {
-		const { task, tasks } = this.state;
-
 		return (
-			<div className="App">
-				<form onSubmit={this.onSubmitTask}>
-					<label htmlFor="taskInput">Enter task</label>
-					<input
-						onChange={this.handleChange}
-						value={task.text}
-						type="text"
-						id="taskInput"
-					/>
-					<button type="submit">Add Task</button>
-				</form>
-				<TaskList
-					tasks={tasks}
-					deleteTask={this.deleteTask}
-					editTask={this.editTask}
-					submitEdit={this.submitEdit}
-				/>
-			</div>
+			<>
+				<Input />
+				<TaskList />
+			</>
 		);
 	}
 }
