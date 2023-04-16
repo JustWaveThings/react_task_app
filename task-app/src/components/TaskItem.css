@@ -1,0 +1,12 @@
+.Task {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 1rem;
+	margin-left: 1rem;
+}
+
+.TaskValue {
+	font-size: 1.5rem;
+	font-weight: 700;
+}

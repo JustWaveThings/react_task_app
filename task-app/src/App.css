@@ -13,3 +13,8 @@
 .App-link {
 	color: #61dafb;
 }
+
+* :not(button, input, .TaskValue) {
+	border: solid 3px pink;
+	margin: 1rem;
+}
